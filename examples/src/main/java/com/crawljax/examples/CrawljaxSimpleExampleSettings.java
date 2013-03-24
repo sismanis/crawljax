@@ -15,8 +15,8 @@ import com.crawljax.core.configuration.ThreadConfiguration;
 public final class CrawljaxSimpleExampleSettings {
 
 	private static final String URL = "http://www.google.com";
-	private static final int MAX_DEPTH = 2;
-	private static final int MAX_NUMBER_STATES = 8;
+	private static final int MAX_DEPTH = 1;
+	private static final int MAX_NUMBER_STATES = 4;
 
 	private CrawljaxSimpleExampleSettings() {
 
@@ -56,6 +56,9 @@ public final class CrawljaxSimpleExampleSettings {
 		crawler.setMaximumStates(MAX_NUMBER_STATES);
 		crawler.setDepth(MAX_DEPTH);
 
+		// also crawl this URL
+		crawler.alsoCrawl("https://www.youtube.com/");
+		
 		return crawler;
 	}
 

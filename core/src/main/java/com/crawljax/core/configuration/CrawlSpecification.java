@@ -63,6 +63,8 @@ public class CrawlSpecification {
 	private final List<WaitCondition> waitConditions = Lists.newLinkedList();
 	private final List<CrawlCondition> crawlConditions = Lists.newLinkedList();
 
+	private List<URL> crawlUrl = Lists.newLinkedList();
+			
 	private int depth = 2;
 	private int maximumStates = 0;
 	private long maximumRuntime = DEFAULT_MAXIMUMRUNTIME;
@@ -500,5 +502,20 @@ public class CrawlSpecification {
 	 */
 	protected boolean isCrawlFrames() {
 		return !disableCrawlFrames;
+	}
+
+	/**
+	 * Adds a URL to be crawled 
+	 * 
+	 * @param string the URL to be crawled
+	 */
+	public void alsoCrawl(String string) {
+
+		try {
+			URL url = new URL(string);
+			crawlUrl.add(url);
+		} catch (MalformedURLException e) {
+			throw new CrawljaxException("Invalid URL: " + string);
+		}
 	}
 }
