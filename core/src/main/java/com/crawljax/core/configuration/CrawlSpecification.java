@@ -63,7 +63,7 @@ public class CrawlSpecification {
 	private final List<WaitCondition> waitConditions = Lists.newLinkedList();
 	private final List<CrawlCondition> crawlConditions = Lists.newLinkedList();
 
-	private List<URL> crawlUrl = Lists.newLinkedList();
+	private List<URL> crawlUrls = Lists.newLinkedList();
 			
 	private int depth = 2;
 	private int maximumStates = 0;
@@ -513,9 +513,18 @@ public class CrawlSpecification {
 
 		try {
 			URL url = new URL(string);
-			crawlUrl.add(url);
+			crawlUrls.add(url);
 		} catch (MalformedURLException e) {
 			throw new CrawljaxException("Invalid URL: " + string);
 		}
+	}
+
+	/**
+	 * Returns the manually specified Urls to crawl
+	 * 
+	 * @return list of Urls
+	 */
+	public List<URL> getManualUrls() {
+		return crawlUrls;
 	}
 }
