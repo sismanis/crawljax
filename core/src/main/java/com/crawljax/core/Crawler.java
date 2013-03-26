@@ -485,7 +485,14 @@ public class Crawler implements Runnable {
 		}
 		return true;
 	}
-
+	
+	/**
+	 * Crawl though the list of manually added Urls
+	 * 
+	 * @param orrigionalState
+	 * 			the current state
+	 * @return true if crawling must continue false otherwise
+	 */
 	private boolean crawlManualUrls(StateVertex orrigionalState) {
 		
 		List<URL> manualUrls = configurationReader.getManualUrls();
