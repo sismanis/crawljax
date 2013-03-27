@@ -27,6 +27,9 @@ public final class CrawljaxSimpleExampleSettings {
 		config.setCrawlSpecification(getCrawlSpecification());
 		config.setThreadConfiguration(getThreadConfiguration());
 		config.setBrowser(BrowserType.firefox);
+
+		// also crawl this URL
+		config.alsoCrawl("https://www.youtube.com/");
 		return config;
 	}
 
@@ -55,9 +58,6 @@ public final class CrawljaxSimpleExampleSettings {
 		// limit the crawling scope
 		crawler.setMaximumStates(MAX_NUMBER_STATES);
 		crawler.setDepth(MAX_DEPTH);
-
-		// also crawl this URL
-		crawler.alsoCrawl("https://www.youtube.com/");
 		
 		return crawler;
 	}

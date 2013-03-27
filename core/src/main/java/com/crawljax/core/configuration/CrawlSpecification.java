@@ -62,8 +62,6 @@ public class CrawlSpecification {
 	private final List<OracleComparator> oracleComparators = Lists.newLinkedList();
 	private final List<WaitCondition> waitConditions = Lists.newLinkedList();
 	private final List<CrawlCondition> crawlConditions = Lists.newLinkedList();
-
-	private List<URL> crawlUrls = Lists.newLinkedList();
 			
 	private int depth = 2;
 	private int maximumStates = 0;
@@ -504,27 +502,4 @@ public class CrawlSpecification {
 		return !disableCrawlFrames;
 	}
 
-	/**
-	 * Adds a URL to be crawled 
-	 * 
-	 * @param string the URL to be crawled
-	 */
-	public void alsoCrawl(String string) {
-
-		try {
-			URL url = new URL(string);
-			crawlUrls.add(url);
-		} catch (MalformedURLException e) {
-			throw new CrawljaxException("Invalid URL: " + string);
-		}
-	}
-
-	/**
-	 * Returns the manually specified Urls to crawl
-	 * 
-	 * @return list of Urls
-	 */
-	public List<URL> getManualUrls() {
-		return crawlUrls;
-	}
 }
