@@ -446,7 +446,7 @@ public class Crawler implements Runnable {
 		// Store the currentState to be able to 'back-track' later.
 		StateVertex orrigionalState = this.getStateMachine().getCurrentState();
 		
-		this.crawlManualUrls(orrigionalState);
+		
 		
 		if (orrigionalState.searchForCandidateElements(candidateExtractor, configurationReader
 		        .getTagElements(), configurationReader.getExcludeTagElements(),
@@ -472,6 +472,7 @@ public class Crawler implements Runnable {
 				return false;
 			}
 			ClickResult result = this.crawlAction(action);
+			this.crawlManualUrls(orrigionalState);
 			orrigionalState.finishedWorking(this, action);
 			switch (result) {
 				case newState:
