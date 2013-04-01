@@ -1,5 +1,6 @@
 package com.crawljax.core;
 
+import java.net.URL;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -440,10 +441,13 @@ public class Crawler implements Runnable {
 		if (!checkConstraints()) {
 			return false;
 		}
-
+		
+		
 		// Store the currentState to be able to 'back-track' later.
 		StateVertex orrigionalState = this.getStateMachine().getCurrentState();
-
+		
+		
+		
 		if (orrigionalState.searchForCandidateElements(candidateExtractor, configurationReader
 		        .getTagElements(), configurationReader.getExcludeTagElements(),
 		        configurationReader.getCrawlSpecificationReader().getClickOnce())) {
@@ -468,6 +472,7 @@ public class Crawler implements Runnable {
 				return false;
 			}
 			ClickResult result = this.crawlAction(action);
+			this.crawlManualUrls(orrigionalState);
 			orrigionalState.finishedWorking(this, action);
 			switch (result) {
 				case newState:
@@ -479,6 +484,32 @@ public class Crawler implements Runnable {
 			}
 			action = orrigionalState.pollCandidateCrawlAction(this, crawlQueueManager);
 		}
+		return true;
+	}
+	
+	/**
+	 * Crawl though the list of manually added Urls
+	 * 
+	 * @param orrigionalState
+	 * 			the current state
+	 * @return true if crawling must continue false otherwise
+	 */
+	private boolean crawlManualUrls(StateVertex orrigionalState) {
+		
+		List<URL> manualUrls = configurationReader.getManualUrls();
+		
+		for (URL url : manualUrls) {
+			getBrowser().goToUrl(url);
+			controller.doBrowserWait(getBrowser());
+			
+			if (!this.crawl()) {
+				// Crawling has stopped
+				controller.terminate(false);
+				return false;
+			}	
+		}
+		this.getStateMachine().changeState(orrigionalState);
+		
 		return true;
 	}
 
