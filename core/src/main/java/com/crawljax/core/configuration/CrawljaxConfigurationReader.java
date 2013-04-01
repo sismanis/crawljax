@@ -1,5 +1,8 @@
 package com.crawljax.core.configuration;
 
+import java.net.URL;
+import java.util.List;
+
 import com.crawljax.browser.EmbeddedBrowser.BrowserType;
 import com.crawljax.browser.EmbeddedBrowserBuilder;
 import com.crawljax.condition.eventablecondition.EventableCondition;
@@ -108,6 +111,14 @@ public class CrawljaxConfigurationReader {
 	public ImmutableList<CrawlElement> getAllIncludedCrawlElements() {
 
 		return crawljaxConfiguration.getAllIncludedCrawlElements();
+	}
+	
+	/**
+	 * @return list of manually added Urls to crawl
+	 */
+	public List<URL> getManualUrls() {
+		
+		return crawljaxConfiguration.getManualUrls();
 	}
 
 	/**

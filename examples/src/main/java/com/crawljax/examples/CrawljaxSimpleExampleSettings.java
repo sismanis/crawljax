@@ -15,8 +15,8 @@ import com.crawljax.core.configuration.ThreadConfiguration;
 public final class CrawljaxSimpleExampleSettings {
 
 	private static final String URL = "http://www.google.com";
-	private static final int MAX_DEPTH = 2;
-	private static final int MAX_NUMBER_STATES = 8;
+	private static final int MAX_DEPTH = 1;
+	private static final int MAX_NUMBER_STATES = 4;
 
 	private CrawljaxSimpleExampleSettings() {
 
@@ -27,6 +27,9 @@ public final class CrawljaxSimpleExampleSettings {
 		config.setCrawlSpecification(getCrawlSpecification());
 		config.setThreadConfiguration(getThreadConfiguration());
 		config.setBrowser(BrowserType.firefox);
+
+		// also crawl this URL
+		config.alsoCrawl("https://www.youtube.com/");
 		return config;
 	}
 
@@ -55,7 +58,7 @@ public final class CrawljaxSimpleExampleSettings {
 		// limit the crawling scope
 		crawler.setMaximumStates(MAX_NUMBER_STATES);
 		crawler.setDepth(MAX_DEPTH);
-
+		
 		return crawler;
 	}
 

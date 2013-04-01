@@ -1,5 +1,7 @@
 package com.crawljax.core.configuration;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,10 +9,12 @@ import com.crawljax.browser.EmbeddedBrowser.BrowserType;
 import com.crawljax.browser.EmbeddedBrowserBuilder;
 import com.crawljax.browser.WebDriverBrowserBuilder;
 import com.crawljax.condition.eventablecondition.EventableCondition;
+import com.crawljax.core.CrawljaxException;
 import com.crawljax.core.plugin.Plugin;
 import com.crawljax.util.DomUtils;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import com.google.common.collect.ImmutableList.Builder;
 
 /**
@@ -45,6 +49,8 @@ public final class CrawljaxConfiguration {
 	private CrawlSpecification crawlSpecification = new CrawlSpecification("http://localhost");
 	private ProxyConfiguration proxyConfiguration = null;
 	private ThreadConfiguration threadConfiguration = new ThreadConfiguration();
+	
+	private List<URL> crawlUrls = Lists.newLinkedList();
 
 	/**
 	 * Constructor.
@@ -283,5 +289,28 @@ public final class CrawljaxConfiguration {
 	public void addPlugin(Plugin plugin) {
 		this.plugins.add(plugin);
 	}
+	
+	/**
+	 * Adds a URL to be crawled 
+	 * 
+	 * @param string the URL to be crawled
+	 */
+	public void alsoCrawl(String string) {
 
+		try {
+			URL url = new URL(string);
+			crawlUrls.add(url);
+		} catch (MalformedURLException e) {
+			throw new CrawljaxException("Invalid URL: " + string);
+		}
+	}
+	
+	/**
+	 * Returns the manually specified Urls to crawl
+	 * 
+	 * @return list of Urls
+	 */
+	public List<URL> getManualUrls() {
+		return crawlUrls;
+	}
 }

@@ -62,7 +62,7 @@ public class CrawlSpecification {
 	private final List<OracleComparator> oracleComparators = Lists.newLinkedList();
 	private final List<WaitCondition> waitConditions = Lists.newLinkedList();
 	private final List<CrawlCondition> crawlConditions = Lists.newLinkedList();
-
+			
 	private int depth = 2;
 	private int maximumStates = 0;
 	private long maximumRuntime = DEFAULT_MAXIMUMRUNTIME;
@@ -501,4 +501,5 @@ public class CrawlSpecification {
 	protected boolean isCrawlFrames() {
 		return !disableCrawlFrames;
 	}
+
 }
