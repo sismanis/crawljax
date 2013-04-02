@@ -117,7 +117,6 @@ public class CrawljaxConfigurationReader {
 	 * @return list of manually added Urls to crawl
 	 */
 	public List<URL> getManualUrls() {
-		
 		return crawljaxConfiguration.getManualUrls();
 	}
 

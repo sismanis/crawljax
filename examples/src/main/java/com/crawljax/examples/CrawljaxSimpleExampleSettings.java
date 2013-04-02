@@ -15,8 +15,8 @@ import com.crawljax.core.configuration.ThreadConfiguration;
 public final class CrawljaxSimpleExampleSettings {
 
 	private static final String URL = "http://www.google.com";
-	private static final int MAX_DEPTH = 1;
-	private static final int MAX_NUMBER_STATES = 4;
+	private static final int MAX_DEPTH = 2;
+	private static final int MAX_NUMBER_STATES = 8;
 
 	private CrawljaxSimpleExampleSettings() {
 
@@ -29,7 +29,17 @@ public final class CrawljaxSimpleExampleSettings {
 		config.setBrowser(BrowserType.firefox);
 
 		// also crawl this URL
-		config.alsoCrawl("https://www.youtube.com/");
+		config.alsoCrawl("http://video.google.ca/");
+		config.alsoCrawl("http://www.blogger.com/");
+		config.alsoCrawl("http://books.google.ca/");
+		config.alsoCrawl("http://translate.google.ca/");
+		config.alsoCrawl("http://picasaweb.google.ca/");
+		config.alsoCrawl("http://maps.google.ca/");
+		config.alsoCrawl("http://play.google.com/");
+		config.alsoCrawl("http://www.youtube.com/");
+		config.alsoCrawl("http://news.google.ca/");
+		config.alsoCrawl("http://mail.google.com/");
+		config.alsoCrawl("http://drive.google.com/");
 		return config;
 	}
 

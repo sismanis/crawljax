@@ -472,7 +472,7 @@ public class Crawler implements Runnable {
 				return false;
 			}
 			ClickResult result = this.crawlAction(action);
-			this.crawlManualUrls(orrigionalState);
+			//this.crawlManualUrls(orrigionalState);
 			orrigionalState.finishedWorking(this, action);
 			switch (result) {
 				case newState:

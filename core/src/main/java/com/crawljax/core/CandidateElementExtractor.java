@@ -1,6 +1,7 @@
 package com.crawljax.core;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -49,6 +50,8 @@ public class CandidateElementExtractor {
 
 	private final ImmutableMultimap<String, TagElement> excludeTagElements;
 	private final ImmutableList<TagElement> includedTagElements;
+	
+	private final List<URL> externalUrls;
 
 	private final boolean clickOnce;
 
@@ -73,6 +76,7 @@ public class CandidateElementExtractor {
 		this.excludeTagElements = asMultiMap(configurationReader.getExcludeTagElements());
 		this.includedTagElements = configurationReader.getTagElements();
 		this.ignoreFrameChecker = configurationReader.getCrawlSpecificationReader();
+		this.externalUrls = configurationReader.getManualUrls();
 		clickOnce = configurationReader.getCrawlSpecificationReader().getClickOnce();
 	}
 
@@ -279,9 +283,14 @@ public class CandidateElementExtractor {
 		if ("A".equalsIgnoreCase(tagElement.getName())) {
 			String href = element.getAttribute("href");
 			if (!Strings.isNullOrEmpty(href)) {
-				boolean isExternal = UrlUtils.isLinkExternal(browser.getCurrentUrl(), href);
-				LOG.debug("HREF: {} isExternal= {}", href, isExternal);
-				if (isExternal || isPDForPS(href)) {
+				boolean isUnspecifiedExternal = UrlUtils.isLinkExternal(browser.getCurrentUrl(), href);
+				for(int i = 0; i < externalUrls.size(); i++) {
+					if (UrlUtils.isLinkExternal(externalUrls.get(i).toString(), href) == false) {
+						isUnspecifiedExternal = false;
+					}
+				}
+				LOG.debug("HREF: {} isUnspecifiedExternal= {}", href, isUnspecifiedExternal);
+				if (isUnspecifiedExternal || isPDForPS(href)) {
 					return;
 				}
 			}
