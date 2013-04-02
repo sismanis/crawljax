@@ -472,7 +472,6 @@ public class Crawler implements Runnable {
 				return false;
 			}
 			ClickResult result = this.crawlAction(action);
-			//this.crawlManualUrls(orrigionalState);
 			orrigionalState.finishedWorking(this, action);
 			switch (result) {
 				case newState:
@@ -484,32 +483,6 @@ public class Crawler implements Runnable {
 			}
 			action = orrigionalState.pollCandidateCrawlAction(this, crawlQueueManager);
 		}
-		return true;
-	}
-	
-	/**
-	 * Crawl though the list of manually added Urls
-	 * 
-	 * @param orrigionalState
-	 * 			the current state
-	 * @return true if crawling must continue false otherwise
-	 */
-	private boolean crawlManualUrls(StateVertex orrigionalState) {
-		
-		List<URL> manualUrls = configurationReader.getManualUrls();
-		
-		for (URL url : manualUrls) {
-			getBrowser().goToUrl(url);
-			controller.doBrowserWait(getBrowser());
-			
-			if (!this.crawl()) {
-				// Crawling has stopped
-				controller.terminate(false);
-				return false;
-			}	
-		}
-		this.getStateMachine().changeState(orrigionalState);
-		
 		return true;
 	}
 
